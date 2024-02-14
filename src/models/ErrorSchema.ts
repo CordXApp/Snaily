@@ -11,7 +11,10 @@ const ErrorSchema = new Schema<SnailyReports>({
     reportId: { type: String, required: true },
     error: { type: Object, required: false },
     resolvedAt: { type: Date, required: false },
-    ignoredAt: { type: Date, required: false }
+    ignoredAt: { type: Date, required: false },
+    investigatingAt: { type: Date, required: false },
+    closedAt: { type: Date, required: false },
+    staffNote: { type: String, required: false }
 }, {
     timestamps: true
 })

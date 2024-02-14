@@ -11,4 +11,7 @@ export interface SnailyReports extends Error {
     updatedAt: Date
     resolvedAt: Date
     ignoredAt: Date
+    investigatingAt: Date
+    closedAt: Date
+    staffNote: string
 }

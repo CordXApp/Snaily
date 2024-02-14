@@ -6,6 +6,7 @@ import { Routes } from "./router/router";
 import { Client } from "discord.js";
 import fastify from "fastify";
 import { config } from "../cfg";
+import Snaily from "src/snaily/client";
 
 export async function server({ client }: any) {
     const app = fastify({ logger: false });
@@ -40,8 +41,16 @@ export async function server({ client }: any) {
     })
 
     app.setErrorHandler((error, req, res) => {
+
+        if (error.code === "FST_ERR_CTP_EMPTY_JSON_BODY") return res.status(400).send({
+            statusCode: 400,
+            code: "SNAILY:BAD_REQUEST",
+            message: "Please provide a valid request body.",
+        })
+
         res.status(500).send({
             message: "Whoops, something went wrong.",
+            error: error.message
         })
     })
 
@@ -69,6 +78,6 @@ export async function server({ client }: any) {
 
 declare module "fastify" {
     export interface FastifyRequest {
-        client: any;
+        client: Snaily;
     }
 }

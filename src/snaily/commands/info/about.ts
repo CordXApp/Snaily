@@ -1,6 +1,5 @@
 import type { CacheType, ChatInputCommandInteraction } from "discord.js"
 import { SlashBase } from "../../schemas/Commands";
-import packageJson from "../../../../package.json";
 import type Snaily from "../../client";
 
 export default class About extends SlashBase {
@@ -23,13 +22,6 @@ export default class About extends SlashBase {
         interaction: ChatInputCommandInteraction<CacheType>,
     ): Promise<any> {
 
-        const uptime: any = client.uptime;
-
-        const seconds = Math.floor((uptime / 1000) % 60);
-        const minutes = Math.floor((uptime / (1000 * 60)) % 60);
-        const hours = Math.floor((uptime / (1000 * 60 * 60)) % 24);
-        const days = Math.floor(uptime / (1000 * 60 * 60 * 24));
-
         const stats = await client.manager.getStatistics();
 
         if (!stats.success) return interaction.reply({
@@ -47,6 +39,11 @@ export default class About extends SlashBase {
         const investigating = stats.data ? `\`${stats.data.investigating}\` reports.` : "0 reports.";
         const resolved = stats.data ? `\`${stats.data.resolved}\` reports.` : "0 reports.";
         const ignored = stats.data ? `\`${stats.data.ignored}\` reports.` : "0 reports.";
+        const duplicate = stats.data ? `\`${stats.data.duplicate}\` reports.` : "0 reports.";
+        const notBug = stats.data ? `\`${stats.data.not_a_bug}\` reports.` : "0 reports.";
+        const moreInfo = stats.data ? `\`${stats.data.need_more_info}\` reports.` : "0 reports.";
+        const closed = stats.data ? `\`${stats.data.closed}\` reports.` : "0 reports.";
+
 
 
 
@@ -78,13 +75,28 @@ export default class About extends SlashBase {
                             inline: true
                         },
                         {
-                            name: '📊 Total',
-                            value: total,
+                            name: '🔁 Duplicate',
+                            value: duplicate,
                             inline: true
                         },
                         {
-                            name: '📦 Version',
-                            value: `v${packageJson.version}`,
+                            name: '🚫 Not a Bug',
+                            value: notBug,
+                            inline: true
+                        },
+                        {
+                            name: '🔍 Need More Info',
+                            value: moreInfo,
+                            inline: true
+                        },
+                        {
+                            name: '🔒 Closed',
+                            value: closed,
+                            inline: true
+                        },
+                        {
+                            name: '📊 Total',
+                            value: total,
                             inline: true
                         }
                     ]

@@ -6,6 +6,7 @@ import { SnailyClient } from "./handlers/Snaily"
 import CommandManager from "./handlers/Commands"
 import EventManager from "./handlers/Listeners"
 import RestManager from "./handlers/RestClient"
+import { SnailyModal } from "./utils/Popup"
 import { server } from "../fastify/server";
 import { Logger } from "./utils/Logger"
 import { config } from "../cfg"
@@ -16,6 +17,7 @@ class Snaily extends Client {
     public commands: CommandManager = new CommandManager(this)
     public events: EventManager = new EventManager(this)
     public restApi: RestManager = new RestManager(this)
+    public modal: SnailyModal = new SnailyModal()
     public logs: Logger = new Logger("[Snaily]:")
     public server: any = server
     public config: IConfig = config
