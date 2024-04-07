@@ -1,0 +1,22 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("MYSQL")
+}
+
+model errors {
+    info      String
+    type      String   @default("UNKNOWN")
+    state     String   @default("OPEN")
+    status    String
+    message   String
+    reporter  String
+    reportId  String   @unique @default(uuid())
+    error     Json
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    staffNote String?  @default("")
+}
